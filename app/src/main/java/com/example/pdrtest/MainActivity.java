@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     // 센서 객체
     private static SensorManager mSensormanager;
     Sensor mAccelerometer;            // 가속도 센서
-    Sensor mOrientSensor;             // 자이로 스코프 센서
+    Sensor mGyroSensor;             // 자이로 스코프 센서
     // TODO : 추후 층수 구분에 기압 센서 사용해야 함
     float azimuthX = 0.0f;             // X 방위
     float azimuthY = 0.0f;             // Y 방위
@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mAccelerometer = mSensormanager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         // SensorManager 를 이용해서 자이로스코프 센서 객체를 얻는다.
-        mOrientSensor = mSensormanager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+//        mGyroSensor = mSensormanager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        mGyroSensor = mSensormanager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
         // 계산부 초기화
         cal = new Calculator();
@@ -161,8 +162,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
         // 센서 값을 이 컨텍스트에서 받아볼 수 있도록 리스너를 등록
-        mSensormanager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        mSensormanager.registerListener(this, mOrientSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        mSensormanager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+        mSensormanager.registerListener(this, mGyroSensor, SensorManager.SENSOR_DELAY_UI);
 
     }
 
@@ -198,7 +199,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 break;
 
                 // 자이로 스코프 센서가 전달한 데이터인 경우
-                case Sensor.TYPE_ORIENTATION:
+//                case Sensor.TYPE_ORIENTATION:
+                case Sensor.TYPE_GYROSCOPE:
 
                     TextView tvX = (TextView)findViewById(R.id.textViewX);
                     tvX.setText("X: " + String.valueOf(event.values[0]));
