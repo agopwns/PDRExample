@@ -203,7 +203,7 @@ public class Calculator {
 
     }
 
-    // Weinberg Approach
+    // Weinberg Approach - 보폭 측정
     public void cal_StepSize()
     {
 
@@ -220,14 +220,17 @@ public class Calculator {
         // 보폭 상수 0.55
         final double k = 0.55;
 
-        // Weinberg Approach
+        // Weinberg Approach 계산식
         temp = k * Math.pow(max - min, 1.0 / 4.0);
 
         // 정지 상태일때의 값 한번더 필터,  0.2이상만 값으로 인정
         if(temp >= 0.2){
 
-            distance = temp;
-//            distance += temp;
+            // Accelerometer 로 이동한 거리와 자이로스코프를 활용하여 방향을 특정하여
+            // 지도의 x,y 축으로 이동하는 방식
+            // TODO : 현재는 90도 각도로만 움직이므로 각도를 계산해서 대각선으로 이동할 수 있게 해야 함.
+            distance = temp; // 바꾼 방식.
+//            distance += temp; // 기존 방식. x축 + 방향 distance 축적 방식
             IsMoved = true;
         }
     }

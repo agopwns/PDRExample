@@ -1,6 +1,7 @@
 package com.example.pdrtest;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.io.InputStream;
 
 public class MapView extends View {
 
@@ -24,9 +27,8 @@ public class MapView extends View {
     private Bitmap imageSize;
     private int floor;
 
-
     // 유저 좌표 변수
-    public float x1 = 100.0f, y1 = 100.0f;
+    public float x1 = 550.0f, y1 = 700.0f;
     public float addX = 0, addY = 0;   // 실시간 좌표 변환
     float resultX;
     float resultY;
@@ -38,6 +40,8 @@ public class MapView extends View {
 //    private ArrayList<BeaconWorker> bk; // 비콘 집합 -> 비콘 좌표 획득
     public float startX, startY;   // 경로 시작지점
 
+    // imageCount
+    private int imageCount = 0;
 
     public  void init()
     {
@@ -89,6 +93,36 @@ public class MapView extends View {
 //            canvas.drawBitmap(imageSize, 0 , 0 , null);
         }
 
+        AssetManager am = getResources().getAssets() ;
+        InputStream is = null ;
+
+
+        // 맵뷰에 지도 그리기
+//        try {
+//            // 애셋 폴더에 저장된 field.png 열기.
+//            is = am.open("office3.png") ;
+//         // 입력스트림 is를 통해 field.png 을 Bitmap 객체로 변환.
+//            Bitmap bm = BitmapFactory.decodeStream(is) ;
+//         // 만들어진 Bitmap 객체를 맵뷰에 표시.
+//            imageSize = Bitmap.createScaledBitmap(bm,
+//                    bm.getWidth() - 50,
+//                    bm.getHeight(),
+//                    true);
+//            canvas.drawBitmap(imageSize, 0 , 0 , null);
+//         is.close() ;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        // 이미지 객체 해제
+//        if (is != null) {
+//            try {
+//                is.close() ;
+//            } catch (Exception e) {
+//                e.printStackTrace() ;
+//            }
+//        }
+
+
         /*
          *  경로 show 구간
          */
@@ -118,14 +152,17 @@ public class MapView extends View {
             }
         }
 
+        // path 먼저 이어놓기
+        path.moveTo(startX, startY);        // 시작점
+
         // 완성한 path 그리기
         canvas.drawPath(path, pathPaint);
 
         /*
          *  user show 구간
          */
-        x1 = x1 + 33 * addX;
-        y1 = y1 + 33 * addY;
+        x1 = x1 + 40 * addX;
+        y1 = y1 + 40 * addY;
 
         canvas.drawCircle(
                 x1,
@@ -133,8 +170,8 @@ public class MapView extends View {
                 10,
                 paint);
 
-        canvas.drawText("x: " + x1 + "\n y: " + y1, 200, 700, paint);
-        canvas.drawText("addX: " + addX + "\n addY: " + addY, 200, 770, paint);
+        canvas.drawText("x: " + x1 + "\n y: " + y1, 200, 900, paint);
+        canvas.drawText("addX: " + addX + "\n addY: " + addY, 200, 970, paint);
 
         addX = 0;
         addY = 0;
@@ -151,7 +188,13 @@ public class MapView extends View {
     public void setStartX(float _x1) {  x1 = _x1; addX = 0;}
     public void setStartY(float _y1) {  y1 = _y1; addY = 0;}
 
+    public void setX1(float x1) {
+        this.x1 = x1;
+    }
 
+    public void setY1(float y1) {
+        this.y1 = y1;
+    }
 
     public void setPath(int _path[]) { pathData = _path; }
     public void setIsNaviOn(boolean naviOn) { IsNaviOn = naviOn; }

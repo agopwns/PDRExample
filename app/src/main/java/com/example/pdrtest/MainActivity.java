@@ -8,6 +8,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     // 각 클래스
     Calculator cal;             // 계산부
     MapView cv;                 // 표시부
-
+    Button initButton;
 
     // 디버깅 네임
     private static final String TAG = MainActivity.class.getName();
@@ -85,6 +87,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         cv = (MapView) findViewById(R.id.cv);
         cv.init();
 
+        // 초기화 버튼
+        initButton = findViewById(R.id.initButton);
+        initButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cv.setStartX(550);
+                cv.setStartY(700);
+            }
+        });
+
     }
 
     public void drawUserPos()
@@ -118,12 +130,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             TextView tvD = (TextView)findViewById(R.id.textViewD); // 테스트용
 
             // x 방위에 따라 이동 값이 달라짐
-            if(315 <= azimuthX && 360 > azimuthX){ // 북
-
-                cv.setY(-(float) cal.getDistance());
-                tvD.setText("현재 방향 : 북" + azimuthX);
-
-            } else if (0 <= azimuthX && azimuthX < 45){
+            if(315 <= azimuthX && 360 > azimuthX || 0 <= azimuthX && azimuthX < 45){ // 북
 
                 cv.setY(-(float) cal.getDistance());
                 tvD.setText("현재 방향 : 북" + azimuthX);
@@ -194,11 +201,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 case Sensor.TYPE_ORIENTATION:
 
                     TextView tvX = (TextView)findViewById(R.id.textViewX);
-                    tvX.setText(String.valueOf(event.values[0]));
+                    tvX.setText("X: " + String.valueOf(event.values[0]));
                     TextView tvY = (TextView)findViewById(R.id.textViewY);
-                    tvY.setText(String.valueOf(event.values[1]));
+                    tvY.setText("Y: " + String.valueOf(event.values[1]));
                     TextView tvZ = (TextView)findViewById(R.id.textViewZ);
-                    tvZ.setText(String.valueOf(event.values[2]));
+                    tvZ.setText("Z: " + String.valueOf(event.values[2]));
 
                     azimuthX = event.values[0];
                     azimuthY = event.values[1];
