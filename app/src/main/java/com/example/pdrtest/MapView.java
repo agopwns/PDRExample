@@ -28,7 +28,8 @@ public class MapView extends View {
     // 유저 좌표 변수
     public float x1 = 153.0f, y1 = 482.0f;
     public float addX = 0, addY = 0;   // 실시간 좌표 변환
-
+    float resultX;
+    float resultY;
 
     // 경로시 필요한 변수
     private int pathData[]; // 순차로 재배열된 경로 배열
@@ -38,29 +39,9 @@ public class MapView extends View {
     public float startX, startY;   // 경로 시작지점
 
 
-
-    // ArrayList<Test> arr = new ArrayList<Test>();
-
-
-
     public  void init()
     {
-
         IsNaviOn = false;
-
-
-        /*
-        arr.add(new Test(100.0f, 700.0f));
-        arr.add(new Test(300.0f, 500.0f));
-        arr.add(new Test(300.0f, 1000.0f));
-        arr.add(new Test(500.0f, 300.0f));
-        arr.add(new Test(500.0f, 700.0f));
-        arr.add(new Test(800.0f, 500.0f));
-        arr.add(new Test(800.0f, 1000.0f));
-        arr.add(new Test(900.0f, 700.0f));
-*/
-
-
     }
 
     // 경로 탐색시 시작지점
@@ -83,8 +64,7 @@ public class MapView extends View {
         // paint
         Paint paint  = new Paint();
         paint.setColor(Color.rgb(255,94,0));
-
-
+        paint.setTextSize(50);
 
         /*
          *  map show 구간
@@ -150,12 +130,18 @@ public class MapView extends View {
         /*
          *  user show 구간
          */
+        resultX = x1 + 33 * addX;
+        resultY = y1 + 33 * addY;
 
         canvas.drawCircle(
-                x1 + 33 * addX,
-                y1 + 33 * addY,
+                resultX,
+                resultY,
                 10,
                 paint);
+
+        canvas.drawText("x: " + resultX + "\n y: " + resultY, 300, 700, paint);
+        canvas.drawText("addX: " + addX + "\n addY: " + addY, 300, 770, paint);
+
 
     }
 

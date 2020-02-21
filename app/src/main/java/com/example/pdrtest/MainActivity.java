@@ -87,15 +87,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-    public void drawUserPos(float xDirection)
+    public void drawUserPos()
     {
         // TODO : 차후 층수 문제는 기압 센서 활용하여 해결
 //        if(floor == 7) cv.setFloor(7);
 //        else if(floor == 8) cv.setFloor(8);
 
         // 경로
-        if(isRequested)
-        {
+        if(isRequested){
+
             // 시작노드 저장
             newPath[0] = start;
 
@@ -116,27 +116,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(cal.getIsMoved()) {
 
             TextView tvD = (TextView)findViewById(R.id.textViewD); // 테스트용
-            cv.setX((float) cal.getDistance());
+
             // x 방위에 따라 이동 값이 달라짐
-            if(315 <= xDirection && 360 > xDirection || 0 <= xDirection && xDirection < 45){ // 북
+            if(315 <= azimuthX && 360 > azimuthX){ // 북
 
                 cv.setY(-(float) cal.getDistance());
-                tvD.setText("북쪽 방향으로 " + (float) cal.getDistance());
+                tvD.setText("현재 방향 : 북" + azimuthX);
 
-            } else if (45 <= xDirection && xDirection < 135){ // 동
+            } else if (0 <= azimuthX && azimuthX < 45){
+
+                cv.setY(-(float) cal.getDistance());
+                tvD.setText("현재 방향 : 북" + azimuthX);
+
+            } else if (45 <= azimuthX && azimuthX < 135){ // 동
 
                 cv.setX((float) cal.getDistance());
-                tvD.setText("동쪽 방향으로 " + (float) cal.getDistance());
+                tvD.setText("현재 방향 : 동" + azimuthX);
 
-            } else if (135 <= xDirection && xDirection < 225){ // 남
+            } else if (135 <= azimuthX && azimuthX < 225){ // 남
 
                 cv.setY((float) cal.getDistance());
-                tvD.setText("남쪽 방향으로 " + (float) cal.getDistance());
+                tvD.setText("현재 방향 : 남" + azimuthX);
 
-            } else if (225 <= xDirection && xDirection < 315){ // 서
+            } else if (225 <= azimuthX && azimuthX < 315){ // 서
 
                 cv.setX(-(float) cal.getDistance());
-                tvD.setText("서쪽 방향으로 " + (float) cal.getDistance());
+                tvD.setText("현재 방향 : 서" + azimuthX);
             }
 
         }
@@ -181,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     cal.cal_PDR();
 
                     // 전체 캔버스 업데이트
-                    drawUserPos(event.values[0]);
+                    drawUserPos();
 
                 break;
 

@@ -9,7 +9,6 @@ public class Calculator {
     // 가속도 벡터 합 변수
     private double accVector;
 
-
     // HPF시 필요한 변수
     private double preAcc;
     private double newAcc;
@@ -17,7 +16,6 @@ public class Calculator {
     private double[] HFilter_data;
     private int HFData_amount;
     private int adjustValue;
-
 
     // LPF시 필요한 변수
     private double LFilter_data[];
@@ -46,7 +44,6 @@ public class Calculator {
 
         HFData_amount = 0;
         adjustValue = 5;
-
 
         LFilter_data = new double[1024];
         LFilterData_amount = 0;
@@ -152,7 +149,6 @@ public class Calculator {
             else if(midIndex >= 5 && midIndex < HFilter_data.length)
                 firstIndex = midIndex - 5;
 
-
             // 데이터 10개의 평균을 낸다.
             for (i = firstIndex; i < midIndex + 4; i++){
                 data += HFilter_data[i];
@@ -171,6 +167,7 @@ public class Calculator {
                 adjustValue = 0;
             }
         }
+
     }
 
 
@@ -229,7 +226,8 @@ public class Calculator {
         // 정지 상태일때의 값 한번더 필터,  0.2이상만 값으로 인정
         if(temp >= 0.2){
 
-            distance += temp;
+            distance = temp;
+//            distance += temp;
             IsMoved = true;
         }
     }
