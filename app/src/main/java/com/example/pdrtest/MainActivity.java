@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
         // 센서 값을 이 컨텍스트에서 받아볼 수 있도록 리스너를 등록
-        mSensormanager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        mSensormanager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         mSensormanager.registerListener(this, mOrientSensor, SensorManager.SENSOR_DELAY_FASTEST);
 
     }

@@ -242,7 +242,14 @@ public class Calculator {
     }
 
 
-    public double getDistance() { return distance; }
+    public double getDistance() {
+
+        double returnValue;
+        returnValue = distance;
+        distance = 0;
+
+        return returnValue;
+    }
     public void setDistance(double _distance) { distance = _distance; }
     public boolean getIsMoved() { return IsMoved; }
     public void setIsMoved(boolean _isMoved) { IsMoved = _isMoved; }

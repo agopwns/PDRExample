@@ -26,7 +26,7 @@ public class MapView extends View {
 
 
     // 유저 좌표 변수
-    public float x1 = 153.0f, y1 = 482.0f;
+    public float x1 = 100.0f, y1 = 100.0f;
     public float addX = 0, addY = 0;   // 실시간 좌표 변환
     float resultX;
     float resultY;
@@ -69,7 +69,6 @@ public class MapView extends View {
         /*
          *  map show 구간
          */
-
         // 사진 580 x 787 을 화면크기에 맞게 1.89배 조정
         if (floor == 7)
         {
@@ -90,11 +89,9 @@ public class MapView extends View {
 //            canvas.drawBitmap(imageSize, 0 , 0 , null);
         }
 
-
         /*
          *  경로 show 구간
          */
-
         // 매 실행시 path 초기화
         path = new Path();
 
@@ -119,29 +116,28 @@ public class MapView extends View {
 //                            bk.get(pathData[i]).getY());
 //                else break;
             }
-
-
         }
 
         // 완성한 path 그리기
         canvas.drawPath(path, pathPaint);
 
-
         /*
          *  user show 구간
          */
-        resultX = x1 + 33 * addX;
-        resultY = y1 + 33 * addY;
+        x1 = x1 + 33 * addX;
+        y1 = y1 + 33 * addY;
 
         canvas.drawCircle(
-                resultX,
-                resultY,
+                x1,
+                y1,
                 10,
                 paint);
 
-        canvas.drawText("x: " + resultX + "\n y: " + resultY, 300, 700, paint);
-        canvas.drawText("addX: " + addX + "\n addY: " + addY, 300, 770, paint);
+        canvas.drawText("x: " + x1 + "\n y: " + y1, 200, 700, paint);
+        canvas.drawText("addX: " + addX + "\n addY: " + addY, 200, 770, paint);
 
+        addX = 0;
+        addY = 0;
 
     }
 
